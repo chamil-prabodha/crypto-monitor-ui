@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Input, Button, Container, Segment, Loader, Dimmer, Grid, Form } from "semantic-ui-react";
 import CurrencyList from "../currency-list/CurrencyList";
 import { getPrice } from "../currency-price/CurrencyPriceClient";
+import { getIPAddress } from "../currency-price/IPAddressClient";
 import CryptoContext from "./CryptoContext";
 import CurrencyPrice from "../currency-price/CurrencyPrice";
 import ErrorMessage from "../error-message/ErrorMessage";
@@ -13,20 +14,25 @@ const CurrencyMonitor = () => {
     const [price, setPrice] = useState(null);
     const [ip, setIp] = useState('');
     const [error, setError] = useState(null);
-    console.log(selectedCurrency);
 
     const getPriceOfCurrency = async(id, ip) => {
         try {
             setLoading(true);
-            const price = await getPrice(id, ip);
+            setError(null);
+            const clientIp = await getIPAddress();
+            const price = await getPrice(id, ip || clientIp);
             setPrice(price);
         } catch(err) {
-            console.log(err);
             setError(err);
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        setPrice(null);
+        setError(null);
+    }, [selectedCurrency]);
 
     return (
         <CryptoContext.Provider value={{loading, price, error, setLoading, setSelectedCurrency, setError}}>

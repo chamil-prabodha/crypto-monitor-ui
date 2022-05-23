@@ -12,7 +12,6 @@ const useCurrencyListApi = () => {
             const list = await getCurrencyList();
             setData(list);
         } catch(err) {
-            console.log(err);
             setError(err);
         } finally {
             setLoading(false);

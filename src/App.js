@@ -5,11 +5,9 @@ import CurrencyMonitor from './currency-monitor/CurrencyMonitor';
 
 const App = () => {
   return (
-    // <Segment className="Page">
-      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-        <CurrencyMonitor />
-      </Grid>
-    // </Segment>
+    <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+      <CurrencyMonitor />
+    </Grid>
   );
 }
 

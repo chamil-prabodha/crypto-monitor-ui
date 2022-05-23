@@ -1,14 +1,17 @@
+import axios from "axios";
 import CryptoError from "../error-message/CryptoError";
 
 const getPrice = async (id, ip) => {
-    const response = await fetch(`http://localhost:8080/api/price/${id}?ip=${ip}`);
-    if (!response.ok) {
-        const { error } = await response.json();
-        throw new CryptoError('There was an error occurred while getting the price of crypto currency', error);
+    try {
+        const response = await axios.get(`http://localhost:8080/api/price/${id}?ip=${ip}`);
+        const { data } = response;
+        return data?.data;
+    } catch (err) {
+        if (err?.response) {
+            throw new CryptoError('There was an error occurred while getting the currency list', err?.response?.data);
+        }
+        throw err;
     }
-    const price = await response.json();
-    console.log(price);
-    return price.data;
 };
 
 export { getPrice };
