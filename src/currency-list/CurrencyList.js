@@ -1,12 +1,15 @@
 import useCurrencyListApi from './CurrencyListHook';
-import { useEffect, useState } from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Grid } from 'semantic-ui-react';
+import CryptoContext from '../currency-monitor/CryptoContext';
+import { useContext } from 'react';
 
-const CurrencyList = ({ onSelect, onLoading }) => {
-  const { loading, data, err } = useCurrencyListApi(onLoading);
+const CurrencyList = () => {
+  const { setSelectedCurrency } = useContext(CryptoContext);
+  const { data } = useCurrencyListApi();
+
   const getCurrencyList = (data) => {
     return data.map(currency => {
-      const { id, symbol, name } = currency;
+      const { id, name } = currency;
       return {
         key: id,
         value: id,
@@ -14,15 +17,16 @@ const CurrencyList = ({ onSelect, onLoading }) => {
       }
     });
   };
+
   return (
     <Dropdown
+      fluid
       placeholder='Select Currency'
-      // fluid
       search
       selection
       options={data ? getCurrencyList(data) : []}
-      onChange={(e, data) => onSelect(data.value)}
-  />
+      onChange={(e, data) => setSelectedCurrency(data.value)}
+    />
   );
 };
 

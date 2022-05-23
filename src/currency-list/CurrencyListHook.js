@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getCurrencyList  } from "./CurrencyListClient";
+import CryptoContext from "../currency-monitor/CryptoContext";
 
-const useCurrencyListApi = (onLoading) => {
-    const [loading, setLoading] = useState(true);
+const useCurrencyListApi = () => {
+    const { setLoading, setError } = useContext(CryptoContext);
     const [data, setData] = useState([]);
-    const [err, setError] = useState(null);
 
-    const api = async () => {
+    const getList = async () => {
         try {
-            onLoading(true);
+            setLoading(true);
             const list = await getCurrencyList();
             setData(list);
         } catch(err) {
             console.log(err);
             setError(err);
         } finally {
-            onLoading(false);
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        api();
+        getList();
     }, []);
 
-    return { loading, data, err };
+    return {data};
 }
 
 export default useCurrencyListApi;
