@@ -49,7 +49,7 @@ const CurrencyMonitor = () => {
                                 <Input fluid placeholder='IP Address' onChange={(e, data) => setIp(data.value)} />
                             </Grid.Column>
                             <Grid.Column>
-                                <Button primary onClick={() => getPriceOfCurrency(selectedCurrency, ip)}>Get Price</Button>
+                                <Button disabled={!selectedCurrency} primary onClick={() => getPriceOfCurrency(selectedCurrency, ip)}>Get Price</Button>
                             </Grid.Column>
                             <Grid.Column>
                                 <CurrencyPrice />
