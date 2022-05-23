@@ -8,7 +8,7 @@ const getPrice = async (id, ip) => {
         return data?.data;
     } catch (err) {
         if (err?.response) {
-            throw new CryptoError('There was an error occurred while getting the currency list', err?.response?.data);
+            throw new CryptoError('There was an error occurred while getting the price of currency', err?.response?.data);
         }
         throw err;
     }
