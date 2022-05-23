@@ -1,4 +1,4 @@
-# crypto-monitor
+# Crypto-Monitor-UI
 
 # Getting Started with Create React App
 
